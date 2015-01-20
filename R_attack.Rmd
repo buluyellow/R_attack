@@ -1,0 +1,70 @@
+---
+title: "R_attack"
+author: "Minajia ZHU"
+date: "Tuesday, January 20, 2015"
+output: html_document
+---
+
+
+```{r,echo=FALSE,warning=FALSE}
+options(xtable.comment = FALSE)
+library("knitr")
+opts_chunk$set(message=F,comment="",tidy=T,warning=FALSE,highlight=TRUE)
+
+```
+
+
+Writing for, while loops is useful when programming but not particularly easy when working interactively on the command line. There are some functions which implement looping to make life easier.
+
+* lapply: Loop over a list and evaluate a function on each element
+* sapply: Same as lapply but try to simplify the result
+* apply: Apply a function over the margins of an array
+* tapply: Apply a function over subsets of a vector
+* mapply: Multivariate version of lapply
+
+An auxiliary function split is also useful, particularly in conjunction with lapply.
+
+
+**example**
+
+*sapply*:
+
+```{r}
+x <- 1:4
+lapply(x, runif, min = 0, max = 10)
+
+x <- list(a = matrix(1:4, 2, 2), b = matrix(1:6, 3, 2)) 
+lapply(x, function(elt) elt[,1])
+```
+
+
+*mapply*:
+
+```{r}
+noise <- function(n, mean, sd) {
+ rnorm(n, mean, sd)
+ }
+noise(5, 1, 2)
+mapply(noise, 1:5, 1:5, 2)
+```
+
+*tapply*:
+
+```{r}
+x <- c(rnorm(10), runif(10), rnorm(10, 1))
+f <- gl(3, 10)
+f
+tapply(x, f, mean)
+```
+
+*split*:
+
+```{r}
+s <- split(airquality, airquality$Month)
+lapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")]))
+sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")],
+                                 na.rm = TRUE))
+
+
+```
+
