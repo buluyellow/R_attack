@@ -14,6 +14,37 @@ opts_chunk$set(message=F,comment="",tidy=T,warning=FALSE,highlight=TRUE)
 ```
 
 
+
+## 备注
+
+1.读取任何形式的数据(包括mp3数据):
+
+> G:\R\datascience\Getting and Cleaning Data\quiz2
+
+----
+
+## lattice
+
+```{r}
+library(lattice)
+## Convert 'Month' to a factor variable
+airquality <- transform(airquality, Month = factor(Month))
+xyplot(Ozone ~ Wind | Month, data = airquality, layout = c(5, 1))
+
+```
+
+```{r}
+set.seed(10)
+x <- rnorm(100)
+f <- rep(0:1, each = 50)
+y <- x + f - f * x + rnorm(100, sd = 0.5)
+f <- factor(f, labels = c("Group 1", "Group 2"))
+xyplot(y ~ x | f, layout = c(2, 1))  ## Plot with 2 panels
+```
+
+----------
+## 数据操作
+
 Writing for, while loops is useful when programming but not particularly easy when working interactively on the command line. There are some functions which implement looping to make life easier.
 
 * lapply: Loop over a list and evaluate a function on each element
@@ -25,9 +56,9 @@ Writing for, while loops is useful when programming but not particularly easy wh
 An auxiliary function split is also useful, particularly in conjunction with lapply.
 
 
-**example**
+### example:
 
-*sapply*:
+### sapply
 
 ```{r}
 x <- 1:4
@@ -38,7 +69,7 @@ lapply(x, function(elt) elt[,1])
 ```
 
 
-*mapply*:
+### mapply
 
 ```{r}
 noise <- function(n, mean, sd) {
@@ -48,7 +79,7 @@ noise(5, 1, 2)
 mapply(noise, 1:5, 1:5, 2)
 ```
 
-*tapply*:
+### tapply
 
 ```{r}
 x <- c(rnorm(10), runif(10), rnorm(10, 1))
@@ -57,7 +88,7 @@ f
 tapply(x, f, mean)
 ```
 
-*split*:
+### split
 
 ```{r}
 s <- split(airquality, airquality$Month)
