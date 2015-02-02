@@ -169,6 +169,19 @@ save.image()
 save(变量x,变量y,变量z, file = &quot;mydata.rda&quot;)
 load(&quot;mydata.rda&quot;)
 </code></pre>
+<p>6.输入与输出</p>
+<pre><code>#文本输出
+sink(&quot;test.txt&quot;,append = T, SPLIT = T)
+#图片输出
+pdf(&quot;test.pdf&quot;&quot;)
+    
+head(CO2)
+dev.off()
+
+write.table(CO2,file = &quot;co2.txt&quot;, row.names = F,col.names = F,sep = &quot;,&quot;)
+
+#从其他程序读取数据,采用foreign包
+</code></pre>
 <hr />
 </div>
 <div id="lattice" class="section level2">
