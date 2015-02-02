@@ -131,6 +131,44 @@ y</code></pre>
 <pre><code>[1] 5 1 3 7</code></pre>
 <pre class="r"><code>mode(y)</code></pre>
 <pre><code>[1] &quot;numeric&quot;</code></pre>
+<p>4.全局设置</p>
+<pre class="r"><code>names(options())</code></pre>
+<pre><code> [1] &quot;add.smooth&quot;            &quot;browserNLdisabled&quot;    
+ [3] &quot;CBoundsCheck&quot;          &quot;check.bounds&quot;         
+ [5] &quot;citation.bibtex.max&quot;   &quot;continue&quot;             
+ [7] &quot;contrasts&quot;             &quot;defaultPackages&quot;      
+ [9] &quot;demo.ask&quot;              &quot;deparse.cutoff&quot;       
+[11] &quot;device&quot;                &quot;device.ask.default&quot;   
+[13] &quot;digits&quot;                &quot;echo&quot;                 
+[15] &quot;editor&quot;                &quot;encoding&quot;             
+[17] &quot;example.ask&quot;           &quot;expressions&quot;          
+[19] &quot;help.search.types&quot;     &quot;help.try.all.packages&quot;
+[21] &quot;help_type&quot;             &quot;HTTPUserAgent&quot;        
+[23] &quot;internet.info&quot;         &quot;keep.source&quot;          
+[25] &quot;keep.source.pkgs&quot;      &quot;knitr.in.progress&quot;    
+[27] &quot;locatorBell&quot;           &quot;mailer&quot;               
+[29] &quot;max.print&quot;             &quot;menu.graphics&quot;        
+[31] &quot;na.action&quot;             &quot;nwarnings&quot;            
+[33] &quot;OutDec&quot;                &quot;pager&quot;                
+[35] &quot;papersize&quot;             &quot;pdfviewer&quot;            
+[37] &quot;pkgType&quot;               &quot;prompt&quot;               
+[39] &quot;repos&quot;                 &quot;scipen&quot;               
+[41] &quot;show.coef.Pvalues&quot;     &quot;show.error.messages&quot;  
+[43] &quot;show.signif.stars&quot;     &quot;showErrorCalls&quot;       
+[45] &quot;str&quot;                   &quot;str.dendrogram.last&quot;  
+[47] &quot;stringsAsFactors&quot;      &quot;tikzMetricsDictionary&quot;
+[49] &quot;timeout&quot;               &quot;ts.eps&quot;               
+[51] &quot;ts.S.compat&quot;           &quot;unzip&quot;                
+[53] &quot;useFancyQuotes&quot;        &quot;verbose&quot;              
+[55] &quot;warn&quot;                  &quot;warning.length&quot;       
+[57] &quot;width&quot;                 &quot;windowsTimeouts&quot;      
+[59] &quot;xtable.comment&quot;       </code></pre>
+<p>5.保存变量和读取变量</p>
+<pre><code>#前者保存全部变量，后者保存指定变量
+save.image()
+save(变量x,变量y,变量z, file = &quot;mydata.rda&quot;)
+load(&quot;mydata.rda&quot;)
+</code></pre>
 <hr />
 </div>
 <div id="lattice" class="section level2">
@@ -174,6 +212,44 @@ xyplot(y ~ x | f, panel = function(x, y, ...) {
 <pre><code>[1] 1 3 5 7 9</code></pre>
 <pre class="r"><code>seq(1, 10, length = 3)</code></pre>
 <pre><code>[1]  1.0  5.5 10.0</code></pre>
+<p><strong>生成因子</strong></p>
+<pre class="r"><code># gl(x,y) x为所需生成不同因子的数目，y为重复的次数
+
+thelevels = data.frame(group = gl(3, 10, length = 30), subgroup = gl(5, 2, length = 30), 
+    obs = gl(2, 1, length = 30))
+
+# 第一个因子乘以第二个因子
+
+expand.grid(seq(1, 5, by = 2), seq(2, 5, by = 2))</code></pre>
+<pre><code>  Var1 Var2
+1    1    2
+2    3    2
+3    5    2
+4    1    4
+5    3    4
+6    5    4</code></pre>
+<p><strong>序列的处理</strong></p>
+<pre class="r"><code># rle()为游程处理
+seq1 = c(1, 3, 5, 2, 4, 2, 2, 2, 7, 6)
+rle.seq1 = rle(seq1)
+rle.seq1</code></pre>
+<pre><code>Run Length Encoding
+  lengths: int [1:8] 1 1 1 1 1 3 1 1
+  values : num [1:8] 1 3 5 2 4 2 7 6</code></pre>
+<pre class="r"><code>any(rle.seq1$values == 2 &amp; rle.seq1$length &gt;= 3)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p><strong>读取数据</strong></p>
+<pre><code>options(stringsAsFactors = F)
+read.table(file, col.names = c(), row.names = NULL, as.is = 索引向量(哪些变量不被转换成因子) / 与变量长度相符的逻辑向量 / TRUE(全部不转换),
+ na.strings = , comment.char = '', encoding = 其他字符, skip = , nrows = 想要读取的行数 ,fill = TRUE(用count.fields来确定问题所在), 
+ colClasses = 字符向量 / &quot;NULL&quot;指跳过某列 / NA指默认设置)
+
+注意:若要读取相同宽度的不规则数据,使用read.fwf函数</code></pre>
+<pre><code>library(RODBC)
+z &lt;− odbcConnectExcel ( ”.xls” )
+dd &lt;− sqlFetch ( z , ” Sheet1 ” )
+close(z)
+</code></pre>
 <p><strong>矩阵</strong></p>
 <pre class="r"><code>rmat = matrix(rnorm(15), 5, 3, dimnames = list(NULL, c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;)))
 rmat</code></pre>
