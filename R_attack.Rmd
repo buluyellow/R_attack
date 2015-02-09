@@ -87,6 +87,25 @@ glmout [ 1 : 5 ]
 
 ```
 
+7.调用R的输出信息
+
+```{r}
+glmout = capture.output(example ( glm ) )
+glmout[1:5]
+
+```
+
+8.字符串转变为命令行
+
+```{r}
+x = 1:10
+a = "print(x)"
+calss(a)
+eval(parse(text = a))
+```
+
+
+
 ## 数据操作
 
 ### 基础
@@ -116,20 +135,22 @@ close(z)
 ```{r}
 
 #数据框是否完整
- x <- c(1, 2, NA, 4, NA, 5)
- y <- c("a", "b", NA, "d", "e",NA)
+x <- c(1, 2, NA, 4, NA, 5)
+y <- c("a", "b", NA, "d", "e",NA)
 complete.cases(x,y)
 
 airquality[1:6, ]
 good <- complete.cases(airquality)
 airquality[good, ][1:6, ]
 
+```
+
+```
 #数据框的元素不同
-indentical( a1 , a2 )
+identical( a1 , a2 )
 which ( a1 !=a2 , arr.ind = TRUE) #arr.ind为array.indices
 
 ```
-
 **去掉多余元素**
 
 ```
@@ -197,13 +218,13 @@ seq(1,10,by = 2)
 seq(1,10,length = 3)
 
 #追加元素
-x <− 1:5
-( foo <− c ( x [ 1 ] , 0 , x [ 2 : 5 ] ) ) # expected r e s u l t
-append ( x , 0 , a f t e r = 1)
+x = 1:5
+( foo = c ( x [ 1 ] , 0 , x [ 2 : 5 ] ) ) # expected r e s u l t
+append ( x , 0 , after = 1)
 
 ```
 
-**生成因子**
+**生成因子,转化为数字**
 
 ```{r}
 #gl(x,y) x为所需生成不同因子的数目，y为重复的次数
@@ -216,6 +237,24 @@ thelevels = data.frame(group=gl(3,10,length=30),
 
 expand.grid(seq(1,5,by = 2),seq(2,5,by = 2))
 ```
+
+```
+as.numeric(as.charactor(x))
+
+```
+
+**两组平行向量的极值**
+
+```{r}
+x= 1:10
+y = rev(x)
+pmax(x,y)
+pmin(x,y)
+
+```
+
+
+
 
 **维度变换**
 
@@ -288,13 +327,19 @@ noise(5, 1, 2)
 mapply(noise, 1:5, 1:5, 2)
 ```
 
-### tapply
+### tapply(用于向量,而aggregate用于数据框)
 
 ```{r}
 x <- c(rnorm(10), runif(10), rnorm(10, 1))
 f <- gl(3, 10)
 f
 tapply(x, f, mean)
+
+attach ( warpbreaks )
+tapply ( breaks , list ( wool , tension ) , mean)
+
+aggregate ( breaks , list ( wool , tension ) , mean)
+
 ```
 
 ### split
