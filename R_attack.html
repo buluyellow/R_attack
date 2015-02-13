@@ -191,6 +191,21 @@ glmout[1:5]</code></pre>
 [3] &quot;glm&gt; counts &lt;- c(18,17,15,20,10,20,25,13,12)&quot;                
 [4] &quot;&quot;                                                            
 [5] &quot;glm&gt; outcome &lt;- gl(3,1,9)&quot;                                   </code></pre>
+<p>7.调用R的输出信息</p>
+<pre class="r"><code>glmout = capture.output(example(glm))
+glmout[1:5]</code></pre>
+<pre><code>[1] &quot;&quot;                                                            
+[2] &quot;glm&gt; ## Dobson (1990) Page 93: Randomized Controlled Trial :&quot;
+[3] &quot;glm&gt; counts &lt;- c(18,17,15,20,10,20,25,13,12)&quot;                
+[4] &quot;&quot;                                                            
+[5] &quot;glm&gt; outcome &lt;- gl(3,1,9)&quot;                                   </code></pre>
+<p>8.字符串转变为命令行</p>
+<pre class="r"><code>x = 1:10
+a = &quot;print(x)&quot;
+class(a)</code></pre>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<pre class="r"><code>eval(parse(text = a))</code></pre>
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 </div>
 <div class="section level2">
 <h2>数据操作</h2>
@@ -309,7 +324,7 @@ x = 1:5
 <pre><code>[1] 1 0 2 3 4 5</code></pre>
 <pre class="r"><code>append(x, 0, after = 1)</code></pre>
 <pre><code>[1] 1 0 2 3 4 5</code></pre>
-<p><strong>生成因子</strong></p>
+<p><strong>生成因子,转化为数字</strong></p>
 <pre class="r"><code># gl(x,y) x为所需生成不同因子的数目，y为重复的次数
 
 thelevels = data.frame(group = gl(3, 10, length = 30), subgroup = gl(5, 2, length = 30), 
@@ -325,6 +340,15 @@ expand.grid(seq(1, 5, by = 2), seq(2, 5, by = 2))</code></pre>
 4    1    4
 5    3    4
 6    5    4</code></pre>
+<pre><code>as.numeric(as.charactor(x))
+</code></pre>
+<p><strong>两组平行向量的极值</strong></p>
+<pre class="r"><code>x = 1:10
+y = rev(x)
+pmax(x, y)</code></pre>
+<pre><code> [1] 10  9  8  7  6  6  7  8  9 10</code></pre>
+<pre class="r"><code>pmin(x, y)</code></pre>
+<pre><code> [1] 1 2 3 4 5 5 4 3 2 1</code></pre>
 <p><strong>维度变换</strong></p>
 <pre><code>x = array(1:24, 2:4)
 xt = aperm(x,c(2,1,3))
@@ -420,8 +444,8 @@ noise(5, 1, 2)</code></pre>
 [[5]]
 [1] 7.704479 4.558443 4.216001 7.013827 6.418257</code></pre>
 </div>
-<div id="tapply" class="section level3">
-<h3>tapply</h3>
+<div id="tapplyaggregate" class="section level3">
+<h3>tapply(用于向量,而aggregate用于数据框)</h3>
 <pre class="r"><code>x &lt;- c(rnorm(10), runif(10), rnorm(10, 1))
 f &lt;- gl(3, 10)
 f</code></pre>
@@ -430,6 +454,19 @@ Levels: 1 2 3</code></pre>
 <pre class="r"><code>tapply(x, f, mean)</code></pre>
 <pre><code>        1         2         3 
 0.5014575 0.4216595 0.9897335 </code></pre>
+<pre class="r"><code>attach(warpbreaks)
+tapply(breaks, list(wool, tension), mean)</code></pre>
+<pre><code>         L        M        H
+A 44.55556 24.00000 24.55556
+B 28.22222 28.77778 18.77778</code></pre>
+<pre class="r"><code>aggregate(breaks, list(wool, tension), mean)</code></pre>
+<pre><code>  Group.1 Group.2        x
+1       A       L 44.55556
+2       B       L 28.22222
+3       A       M 24.00000
+4       B       M 28.77778
+5       A       H 24.55556
+6       B       H 18.77778</code></pre>
 </div>
 <div id="split" class="section level3">
 <h3>split</h3>

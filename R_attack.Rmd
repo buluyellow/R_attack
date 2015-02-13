@@ -100,7 +100,7 @@ glmout[1:5]
 ```{r}
 x = 1:10
 a = "print(x)"
-calss(a)
+class(a)
 eval(parse(text = a))
 ```
 
@@ -202,8 +202,10 @@ Y <- cbind(X,rnorm(5))
 
 ```
 
-```{r}
+**合并数据框**
 
+```
+merge(x,y,by.x = ,by.y = ,all = )
 
 ```
 
@@ -223,6 +225,29 @@ x = 1:5
 append ( x , 0 , after = 1)
 
 ```
+
+**数据标准化**
+```{r}
+
+x = c(rnorm(100),2*rnorm(30))
+m = scale(x,scale = F) #only centering
+n = scale(x,center = F) #only scaling
+
+```
+
+
+
+**抽样**
+
+```
+sample(x)
+sample(x,replace = T)
+sample(x,n)
+sample(x,n,replace = T)
+sample(x,n,replace = T,prob = p)
+```
+
+
 
 **生成因子,转化为数字**
 
@@ -265,6 +290,17 @@ dim(x) ; dim(xt)
 
 ```
 
+**序列转矩阵**
+
+```{r}
+
+x = 1:10
+t(x);class(t(x))
+t(t(x));class(t(t(x)))
+
+```
+
+
 **序列的处理**
 
 ```{r}
@@ -288,6 +324,11 @@ rmat
 rmat = matrix(rnorm(15),5,3)
 dimnames(rmat) = list(NULL,c('A','B','C'))
 rmat
+
+crossprod(X,y) #矩阵乘法
+outer(month.abb, 1999:2003, FUN = "paste") #outer的使用
+
+
 ```
 
 
@@ -309,6 +350,7 @@ An auxiliary function split is also useful, particularly in conjunction with lap
 ### sapply
 
 ```{r}
+#x可以为dataframe,list或者向量
 x <- 1:4
 lapply(x, runif, min = 0, max = 10)
 
@@ -390,3 +432,17 @@ xyplot(y ~ x | f, panel = function(x, y, ...) {
 ```
 
 ----------
+
+## 数学运算
+
+**积分**
+
+```{r}
+
+integrate(dnorm , -1.96 , 1.96)
+integrate(dnorm , -Inf , Inf )
+fun = function(x) {x^2}
+integrate(fun,lower = 0,upper = 2)
+
+```
+
