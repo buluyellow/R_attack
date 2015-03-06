@@ -252,6 +252,25 @@ sample(x,n,replace = T,prob = p)
 **生成因子,转化为数字**
 
 ```{r}
+
+#因子的基础知识
+
+data = c(1,2,2,3,1,2,3,3,1,2,3,3,1)
+fdata = factor(data)
+levels(fdata) = c('I','II','III')
+
+#有序因子
+
+mons = factor('march','april','august',
+         levels = c('april','march','august'),
+         order = T)
+
+#对因子重新排序
+
+with(InsectSprays,
+     reorder(spray,count,mean)
+     )
+
 #gl(x,y) x为所需生成不同因子的数目，y为重复的次数
 
 thelevels = data.frame(group=gl(3,10,length=30),
@@ -325,7 +344,7 @@ rmat = matrix(rnorm(15),5,3)
 dimnames(rmat) = list(NULL,c('A','B','C'))
 rmat
 
-crossprod(X,y) #矩阵乘法
+ #矩阵乘法,crossprod(X,y)
 outer(month.abb, 1999:2003, FUN = "paste") #outer的使用
 
 
