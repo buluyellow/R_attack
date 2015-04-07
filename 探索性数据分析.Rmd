@@ -1,0 +1,61 @@
+---
+title: "探索性数据分析"
+author: "祝铭嘉"
+date: "Wednesday, April 01, 2015"
+output: html_document
+---
+
+```{r,echo=FALSE,warning=FALSE}
+options(xtable.comment = FALSE)
+library("knitr")
+library("formatR")
+opts_chunk$set(message=F,comment="",tidy=T,warning=FALSE,highlight=TRUE)
+
+```
+
+### tapply(用于向量,而aggregate用于数据框)
+
+```{r}
+x <- c(rnorm(10), runif(10), rnorm(10, 1))
+f <- gl(3, 10)
+f
+tapply(x, f, mean)
+
+attach ( warpbreaks )
+
+tapply ( breaks , list ( wool , tension ) , mean)
+
+aggregate ( breaks , list ( wool , tension ) , mean)
+
+aggregate(state.x77, list(Region = state.region), mean)
+
+aggregate(state.x77, list(Region = state.region,
+Cold = state.x77[,"Frost"] > 130),mean)
+
+coplot(y ~ x | a)
+coplot(y ~ x | a*b)
+library(lattice)
+histogram(~y|factor)
+
+```
+
+
+```
+coplot(y ~ x | a)
+coplot(y ~ x | a*b)
+
+library(lattice)
+histogram(~y|factor)
+boxplot(y~factor)
+
+stripchart(y~factor,method="")
+densityplot(~y | factor )
+
+```
+
+x = HairEyeColor
+a = apply(HairEyeColor,c(1,2),sum)
+
+x<-c(175 , 176 , 173 , 175 ,174 ,173 , 173, 176 , 173,179 )
+t.test(x)$conf.int  
+

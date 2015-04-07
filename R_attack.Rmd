@@ -2,7 +2,7 @@
 title: "R_attack"
 author: "Minajia ZHU"
 date: "Tuesday, January 20, 2015"
-output: html_document
+output: word_document
 ---
 
 
@@ -31,6 +31,8 @@ ls.str()
 ```
 
 ```{r}
+plot(airquality)#二维散点图
+boxplot(airquality)#框须图
 summary(airquality)
 str(airquality)
 attributes(airquality)
