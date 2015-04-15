@@ -130,6 +130,9 @@ z <− odbcConnectExcel ( ”.xls” )
 dd <− sqlFetch ( z , ” Sheet1 ” )
 close(z)
 
+#读取剪切版数据
+mydata = read.delim("clipboard")
+
 ```
 
 **检验两组向量或者数据框是否都为完整的，或者不同**
